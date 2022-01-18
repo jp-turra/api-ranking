@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import JogadorDto from './dto/jogador.dto';
-import { JogadorEntity } from './jogador.entity';
+import JogadorDto from '../dto/jogador.dto';
+import { JogadorEntity } from '../entity/jogador.entity';
 import { JogadoresProvider } from './jogadores.provider';
 @Controller('Jogadores')
 export class JogadoresController {
