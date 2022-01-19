@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import JogadorDto from '../dto/jogador.dto';
-import { JogadorEntity } from '../entity/jogador.entity';
+import JogadorDto from './dto/jogador.dto';
+import Jogador from './interface/jogador.interface';
+import { JogadorEntity } from './jogador.entity';
 
 @Injectable()
 export class JogadoresProvider {
