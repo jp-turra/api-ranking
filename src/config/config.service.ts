@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import 'dotenv/config';
 
 class ConfigService {
@@ -27,9 +27,9 @@ class ConfigService {
     return mode != 'DEV';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  public getSequelizeConfig(): SequelizeModuleOptions {
     return {
-      type: 'postgres',
+      dialect: 'postgres',
 
       host: this.getValue('POSTGRES_HOST'),
       port: parseInt(this.getValue('POSTGRES_PORT')),
@@ -37,17 +37,11 @@ class ConfigService {
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
 
-      entities: ['**/*.entity{.ts,.js}'],
-
-      migrationsTableName: 'migration',
-
-      migrations: ['src/migration/*.ts'],
-
-      cli: {
-        migrationsDir: 'src/migration',
-      },
+      models: ['**/*.model{.ts,.js}'],
 
       ssl: this.isProduction(),
+      // autoLoadModels: true,
+      synchronize: true,
     };
   }
 }

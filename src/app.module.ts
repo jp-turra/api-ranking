@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { JogadoresModule } from './jogadores/jogadores.module';
 import { configService } from './config/config.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     JogadoresModule,
-    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    SequelizeModule.forRoot(configService.getSequelizeConfig()),
   ],
   controllers: [],
-  providers: [],
+  providers: [AppService],
 })
 export class AppModule {}

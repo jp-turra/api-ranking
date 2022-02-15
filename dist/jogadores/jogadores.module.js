@@ -8,14 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JogadoresModule = void 0;
 const common_1 = require("@nestjs/common");
+const jogador_model_1 = require("../models/jogador.model");
 const jogadores_controller_1 = require("./jogadores.controller");
-const jogadores_provider_1 = require("./providers/jogadores.provider");
+const jogadores_provider_1 = require("./jogadores.provider");
+const sequelize_1 = require("@nestjs/sequelize");
 let JogadoresModule = class JogadoresModule {
 };
 JogadoresModule = __decorate([
     (0, common_1.Module)({
-        controllers: [jogadores_controller_1.JogadoresController],
+        imports: [sequelize_1.SequelizeModule.forFeature([jogador_model_1.default])],
         providers: [jogadores_provider_1.JogadoresProvider],
+        controllers: [jogadores_controller_1.JogadoresController],
     })
 ], JogadoresModule);
 exports.JogadoresModule = JogadoresModule;

@@ -1,21 +1,27 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import JogadorDto from './dto/jogador.dto';
-import { JogadorEntity } from './jogador.entity';
+import JogadorModel from '../models/jogador.model';
 import { JogadoresProvider } from './jogadores.provider';
 @Controller('Jogadores')
 export class JogadoresController {
-  private jogadoresRepo = new Repository<JogadorEntity>();
-  private provider = new JogadoresProvider(this.jogadoresRepo);
+  private provider = new JogadoresProvider(JogadorModel);
   @Post()
-  async upsert(@Body() jogadorDto: JogadorDto) {
-    this.provider.upsert(jogadorDto);
-    return;
+  async create(@Body() jogadorDto: JogadorDto): Promise<JogadorModel> {
+    return await this.provider.create(jogadorDto);
   }
+
   @Get()
-  async get(@Query('email') email: string) {
+  async get(
+    @Query('email') email: string,
+  ): Promise<JogadorModel | JogadorModel[]> {
     return !email
       ? await this.provider.getAll()
       : [await this.provider.get(email)];
+  }
+
+  @Delete()
+  async delete(@Query('email') email: string): Promise<void> {
+    this.provider.delete(email);
+    return;
   }
 }

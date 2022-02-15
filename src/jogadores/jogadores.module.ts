@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { JogadorEntity } from './jogador.entity';
+import JogadorModel from '../models/jogador.model';
 import { JogadoresController } from './jogadores.controller';
 import { JogadoresProvider } from './jogadores.provider';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([JogadorEntity])],
+  imports: [SequelizeModule.forFeature([JogadorModel])],
   providers: [JogadoresProvider],
   controllers: [JogadoresController],
 })

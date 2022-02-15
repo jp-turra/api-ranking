@@ -1,38 +1,35 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import JogadorDto from './dto/jogador.dto';
-import Jogador from './interface/jogador.interface';
-import { JogadorEntity } from './jogador.entity';
+import JogadorModel from '../models/jogador.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class JogadoresProvider {
   constructor(
-    @InjectRepository(JogadorEntity)
-    private jogadoresRepo: Repository<JogadorEntity>,
+    @InjectModel(JogadorModel)
+    private jogadorModel: typeof JogadorModel,
   ) {}
 
-  async upsert(jogadorDto: JogadorDto): Promise<void> {
+  async create(jogadorDto: JogadorDto): Promise<JogadorModel> {
     const { email, nome, telefone } = jogadorDto;
-    let jogador: JogadorEntity = await this.get(email);
-    if (jogador) jogador.nome = nome;
-    else jogador = new JogadorEntity(nome, email, telefone);
-
-    this.jogadoresRepo.save(jogador);
-    return;
+    return await this.jogadorModel.create({
+      nome: nome,
+      email: email,
+      telefone: telefone,
+    });
   }
 
-  async getAll(): Promise<JogadorEntity[]> {
-    return this.jogadoresRepo.find();
+  async getAll(): Promise<JogadorModel[]> {
+    return this.jogadorModel.findAll();
   }
 
-  async get(email: string): Promise<JogadorEntity> {
-    return this.jogadoresRepo.findOne({ where: { email: email } });
+  async get(email: string): Promise<JogadorModel> {
+    return this.jogadorModel.findOne({ where: { email: email } });
   }
 
   async delete(email: string): Promise<void> {
     const jogador = await this.get(email);
     if (!jogador) throw new NotFoundException();
-    await this.jogadoresRepo.delete(jogador.id);
+    await jogador.destroy();
   }
 }

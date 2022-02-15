@@ -15,10 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JogadoresController = void 0;
 const common_1 = require("@nestjs/common");
 const jogador_dto_1 = require("./dto/jogador.dto");
-const jogadores_provider_1 = require("./providers/jogadores.provider");
+const jogador_model_1 = require("../models/jogador.model");
+const jogadores_provider_1 = require("./jogadores.provider");
 let JogadoresController = class JogadoresController {
     constructor() {
-        this.provider = new jogadores_provider_1.JogadoresProvider();
+        this.provider = new jogadores_provider_1.JogadoresProvider(jogador_model_1.default);
     }
     async upsert(jogadorDto) {
         this.provider.upsert(jogadorDto);
@@ -28,6 +29,10 @@ let JogadoresController = class JogadoresController {
         return !email
             ? await this.provider.getAll()
             : [await this.provider.get(email)];
+    }
+    async delete(email) {
+        this.provider.delete(email);
+        return;
     }
 };
 __decorate([
@@ -44,6 +49,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], JogadoresController.prototype, "get", null);
+__decorate([
+    (0, common_1.Delete)(),
+    __param(0, (0, common_1.Query)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], JogadoresController.prototype, "delete", null);
 JogadoresController = __decorate([
     (0, common_1.Controller)('Jogadores')
 ], JogadoresController);

@@ -25,13 +25,18 @@
     "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/sequelize": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
+    "@types/validator": "^13.7.1",
     "dotenv": "^14.1.0",
     "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.41",
+    "sequelize": "^6.13.0",
+    "sequelize-cli": "^6.4.1",
+    "sequelize-typescript": "^2.1.2",
     "uuidv4": "^6.2.12"
   },
   "devDependencies": {
@@ -40,7 +45,8 @@
     "@nestjs/testing": "^8.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
-    "@types/node": "^16.0.0",
+    "@types/node": "^16.11.21",
+    "@types/sequelize": "^4.28.11",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -55,7 +61,7 @@
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.4.0",
-    "tsconfig-paths": "^3.10.1",
+    "tsconfig-paths": "^3.12.0",
     "typescript": "^4.3.5"
   },
   "jest": {
